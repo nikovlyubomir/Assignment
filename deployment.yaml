@@ -1,0 +1,42 @@
+apiVersion: apps/v1 # for versions before 1.9.0 use apps/v1beta2 
+kind: Deployment 
+metadata: 
+  name: docker-spring-boot
+spec: 
+  selector: 
+    matchLabels: 
+      app: docker 
+  replicas: 2
+  template: 
+    metadata: 
+      labels: 
+        app: docker 
+    spec: 
+      containers: 
+      - name: docker 
+        image: nikovlyubomir/docker-spring-boot:latest
+        imagePullPolicy: Always
+        ports: 
+        - containerPort: 80
+        
+        
+ 
+        
+---
+
+
+kind: Service 
+apiVersion: v1 
+metadata: 
+  name: docker-spring-boot
+spec:  
+  selector: 
+    app: docker
+  type: NodePort
+  ports: 
+  - protocol: TCP 
+    port: 80 
+    targetPort: 80 
+   
+  
+
